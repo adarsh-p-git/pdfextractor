@@ -1,12 +1,8 @@
+const express = require('express');
+const router = express.Router();
+const pdfController = require('../Controller/pdfController');
+const multerConfig = require('../Middlewares/multerMiddleware');
 
-const express=require('express')
-const router=new express.Router();
-const pdfController=require('../Controller/pdfController')
+router.post('/upload-pdf', multerConfig.single('pdfFile'), pdfController.upload);
 
-
-//upload pdf upload
-
-router.post('/upload-pdf',pdfController.upload)
-
-
-module.exports=router;
+module.exports = router;

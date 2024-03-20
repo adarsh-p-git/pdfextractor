@@ -1,26 +1,27 @@
+const multer = require('multer');
+
 const storage = multer.diskStorage({
-  destination: (req, res, c) => {
-    c(null, "./uploads");
-  },
-  filename: (req, res, c) => {
-    const filename = `pdf-${Data.now()}-${file.originalname}`;
-    c(null, filename);
-  },
+    destination: (req, file, cb) => {
+        cb(null, "./uploads");
+    },
+    filename: (req, file, cb) => {
+        const filename = `pdf-${Date.now()}-${file.originalname}`;
+        cb(null, filename);
+    },
 });
 
-const fileFilter=(req,file,c)=>
-{
-    if(file.mimetype==='pdf/pdf')
-    {
-        c(null,true)
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+        cb(new Error('Only upload PDF files.'));
     }
-    else
-    {
-        c(null,false)
-        return c(new Error('Only Upload PDF files...')))
-    }
-}
+};
 
-const multerConfig=multer({
-    storage,fileFilter
-})
+const multerConfig = multer({
+    storage,
+    fileFilter
+});
+
+module.exports = multerConfig;
