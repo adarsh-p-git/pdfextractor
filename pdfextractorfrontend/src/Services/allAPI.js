@@ -1,6 +1,7 @@
 import axios from "axios";
+import { baseURL } from "./baseURL";
 
-const baseURL = "http://localhost:4000"; // Corrected: Added protocol 'http://'
+
 
 export const uploadPDFAPI = async (reqBody) => {
     try {
@@ -10,3 +11,13 @@ export const uploadPDFAPI = async (reqBody) => {
         throw error;
     }
 };
+
+export const createPDFAPI = async (reqBody) => {
+    try {
+        const result = await axios.post(`${baseURL}/create-pdf`, reqBody);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+

@@ -7,6 +7,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         const filename = `pdf-${Date.now()}-${file.originalname}`;
         cb(null, filename);
+        //console.log(filename)
     },
 });
 

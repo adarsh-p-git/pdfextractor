@@ -6,13 +6,16 @@ const router=require('./Router/router')
 
 const pdfServer=express()
 
+//parse json
+pdfServer.use(express.json())
+
 //data sharing
 
 pdfServer.use(cors())
 
-//parse json
 
-pdfServer.use(express.json())
+// Serve static files from the "uploads" directory
+pdfServer.use('/uploads', express.static('uploads'));
 
 pdfServer.use(router)
 
