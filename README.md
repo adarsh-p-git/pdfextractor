@@ -41,3 +41,11 @@ RUN FRONTEND:
  npm start
 
 Go to http://localhost:3000 in your browser to view the website
+
+## Web App State Screenshots
+
+!Pdf Upload (https://github.com/adarsh-p-git/pdfextractor/blob/main/ss1.png?raw=true)
+
+!Pdf Page Selection (https://github.com/adarsh-p-git/pdfextractor/blob/main/ss2.png?raw=true)
+
+! New Extracted Pdf Download (https://github.com/adarsh-p-git/pdfextractor/blob/main/ss3.png?raw=true)
