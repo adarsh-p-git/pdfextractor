@@ -1,2 +1,2 @@
 
-export const baseURL = "https://pdfextractorbackend.onrender.com:4000"; 
+export const baseURL = "https://pdfextractorbackend.onrender.com"; 
