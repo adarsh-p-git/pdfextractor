@@ -19,7 +19,7 @@ function Footer() {
           We're here to help! If you have any enquiries or feedback, don't hesitate to reach out. Feel free to email us directly:
         </Card.Text>
         <Button variant="outline-primary" href="mailto:contact@extractoxpdf.com">
-          contact@extractoxpdf.com
+          contact@pdfextractox.com
         </Button>
       </Card.Body>
     </Card>
