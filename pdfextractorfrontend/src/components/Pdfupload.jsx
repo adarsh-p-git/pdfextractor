@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { createPDFAPI, uploadPDFAPI } from '../Services/allAPI';
 import { PDFDocument } from 'pdf-lib';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { baseURL } from '../Services/baseURL';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Pdfupload() {
+function PdfUpload() {
     const [selectedPDF, setSelectedPDF] = useState(null);
-    const [errorMsg, setErrorMsg] = useState("");
     const [selectedPages, setSelectedPages] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     const [uploadFileName, setUploadedFilename] = useState("");
     const [newPdfLink, setNewPdfLink] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [createPDFError, setCreatePDFError] = useState("");
 
     const handlePDFUpload = async (e) => {
         const file = e.target.files[0];
@@ -23,23 +23,17 @@ function Pdfupload() {
             try {
                 const result = await uploadPDFAPI(reqBody);
                 if (result.status === 200) {
-                    console.log(result.data);
-                    setUploadedFilename(result.data.filename); // Set the filename state
-                    alert('PDF uploaded');
+                    setUploadedFilename(result.data.filename); 
+                    toast('PDF uploaded successfully! 🦄');
                 } else {
-                    console.error(result);
-                    if (result.response && result.response.data) {
-                        console.log(result.response.data);
-                    } else {
-                        console.error("Unexpected error occurred:", result);
-                    }
+                    console.error("Unexpected error occurred:", result);
                 }
             } catch (error) {
-                console.error("API request failed:", error);
+                toast.error("API request failed: " + error.message);
             }
         } else {
             setSelectedPDF(null);
-            setErrorMsg("The selected file is not a valid PDF.");
+            toast.error("The selected file is not a valid PDF. 🚫");
         }
     };
 
@@ -51,8 +45,7 @@ function Pdfupload() {
                     const pdfDoc = await PDFDocument.load(pdfBytes);
                     setTotalPages(pdfDoc.getPageCount());
                 } catch (error) {
-                    console.error("Error loading PDF:", error);
-                    setErrorMsg("Error loading PDF. Please try again.");
+                    toast.error("Error loading PDF. Please try again. 🚫");
                 }
             }
         };
@@ -79,47 +72,45 @@ function Pdfupload() {
             setLoading(true);
             const result = await createPDFAPI(reqBody);
             if (result.status === 200) {
-                console.log(result.data.downloadLink);
                 setNewPdfLink(result.data.downloadLink); 
-                setCreatePDFError(result.data.errorMessage); 
+                toast('New PDF created successfully! 🎉');
             } else {
-                console.error(result);
-                if (result.response && result.response.data) {
-                    console.log(result.response.data);
-                } else {
-                    console.error("Unexpected error occurred:", result);
-                }
+                console.error("Unexpected error occurred:", result);
             }
         } catch (error) {
-            console.error("API request failed:", error);
+            toast.error("Failed to create new PDF. 🚫");
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <Container>
+            <ToastContainer />
             <Row className="mt-3">
                 <Col>
                     <Form>
                         <Form.Group controlId="formFile" className="mb-3">
                             <Form.Label>Select PDF:</Form.Label>
-                            <Form.Control type="file" onChange={handlePDFUpload} />
-                            {errorMsg && <Alert variant="danger" className="mt-2">{errorMsg}</Alert>}
+                            <Form.Control type="file"className='rounded' onChange={handlePDFUpload} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Select Pages:</Form.Label>
-                            {Array.from({ length: totalPages }, (_, index) => index + 1).map(pageNumber => (
-                                <Form.Check
-                                    key={pageNumber}
-                                    type="checkbox"
-                                    id={`page-${pageNumber}`}
-                                    label={`Page ${pageNumber}`}
-                                    checked={selectedPages.includes(pageNumber)}
-                                    onChange={() => handlePageSelect(pageNumber)}
-                                />
-                            ))}
+                            <div className="row">
+                                {Array.from({ length: totalPages }, (_, index) => index + 1).map(pageNumber => (
+                                    <div className="col-6 col-sm-4 col-md-3 col-lg-2" key={pageNumber}>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id={`page-${pageNumber}`}
+                                            label={`Page ${pageNumber}`}
+                                            checked={selectedPages.includes(pageNumber)}
+                                            onChange={() => handlePageSelect(pageNumber)}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </Form.Group>
+
                         <Button variant="primary" onClick={handleCreateNewPDF} disabled={!selectedPDF || loading}>
                             {loading ? 'Creating...' : 'Create New PDF'}
                         </Button>
@@ -130,16 +121,7 @@ function Pdfupload() {
             {newPdfLink && (
                 <Row className="mt-3">
                     <Col>
-                        <Alert variant="success">
-                            <a href={`${baseURL}${newPdfLink}`} download>Download New PDF</a>
-                        </Alert>
-                    </Col>
-                </Row>
-            )}
-            {createPDFError && (
-                <Row className="mt-3">
-                    <Col>
-                        <Alert variant="danger">{createPDFError}</Alert>
+                        <a href={`${baseURL}${newPdfLink}`} download target="_blank" className="btn btn-success">Download New PDF</a>
                     </Col>
                 </Row>
             )}
@@ -147,4 +129,4 @@ function Pdfupload() {
     );
 }
 
-export default Pdfupload;
+export default PdfUpload;

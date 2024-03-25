@@ -1,0 +1,10 @@
+.page-heading{
+    font-family: "Merriweather Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bolder;
+  
+  font-style: normal;
+  color: rgb(21, 45, 78);
+  text-shadow: 2px 2px  rgb(189, 197, 211);
+}
+
