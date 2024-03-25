@@ -92,7 +92,7 @@ function PdfUpload() {
                     <Form>
                         <Form.Group controlId="formFile" className="mb-3">
                             <Form.Label>Select PDF:</Form.Label>
-                            <Form.Control type="file"className='rounded' onChange={handlePDFUpload} />
+                            <Form.Control type="file"className='' onChange={handlePDFUpload} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Select Pages:</Form.Label>
