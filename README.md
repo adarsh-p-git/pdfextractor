@@ -24,7 +24,8 @@ git clone https://github.com/adarsh-p-git/pdfextractor.git
 Navigate to the project directory:
 cd pdfextractor
 
-RUN SERVER:
+RUN SERVER: 
+
 - Navigate to backend directory:
   cd pdfextractorbackend
 -Install the required dependencies:
