@@ -1,5 +1,8 @@
 const multer = require('multer');
 
+
+//multer middleware Configuration for PDF file upload
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./uploads");

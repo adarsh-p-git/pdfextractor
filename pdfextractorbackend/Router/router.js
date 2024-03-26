@@ -5,6 +5,7 @@ const multerConfig = require('../Middlewares/multerMiddleware');
 
 
 //pdf upload router
+
 router.post('/upload-pdf', multerConfig.single('pdfFile'), pdfController.upload);
 
 

@@ -2,6 +2,7 @@ const express=require("express")
 const cors=require('cors')
 const dotenv=require('dotenv').config()
 const router=require('./Router/router')
+
 //create express server
 
 const pdfServer=express()
@@ -17,7 +18,12 @@ pdfServer.use(cors())
 // Serve static files from the "uploads" directory
 pdfServer.use('/uploads', express.static('uploads'));
 
+
+//use router
 pdfServer.use(router)
+
+
+//set PORT to run server
 
 const PORT =4000 || process.env.PORT
 

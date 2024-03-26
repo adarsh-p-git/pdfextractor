@@ -1,6 +1,9 @@
 const fs = require('fs'); 
 const { PDFDocument } = require('pdf-lib');
 
+
+//upload pdf controller
+
 exports.upload = async (req, res) => {
   console.log("Inside upload PDF function");
   //const pdfFile = req.file.filename;
@@ -20,6 +23,9 @@ exports.upload = async (req, res) => {
 
 
 const path = require('path');
+
+
+//extract pages and create new pdf controller
 
 exports.createNewPDF = async (req, res) => {
     console.log("Inside create New PDF function");
